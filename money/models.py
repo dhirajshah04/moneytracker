@@ -1,6 +1,8 @@
 from django.db import models
 from model_utils import Choices
 
+from users.models import User
+
 ACCOUNT_TYPE = Choices(
     'Bank',
     'Digital Wallet',
@@ -9,6 +11,7 @@ ACCOUNT_TYPE = Choices(
 
 
 class Account(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
     account_name = models.CharField(max_length=255)
     account_type = models.CharField(max_length=100, choices=ACCOUNT_TYPE, default=ACCOUNT_TYPE.Bank)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,6 +25,7 @@ class Account(models.Model):
 
 
 class Money(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moneys')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='moneys')
     amount = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
