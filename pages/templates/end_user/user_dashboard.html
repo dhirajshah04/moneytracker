@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center text-uppercase mt-5 mb-5">Income Expense Tracker</h2>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-10 offset-1">
+                <div class="card">
+                    <div class="card-header text-uppercase mb-5">
+                        <h5>Dashboard</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-5">
+                                <a href="{% url 'money:add_account' %}" class="text-decoration-none">
+                                    <div class="card card-bg card-shadow text-white p-5">
+                                        <div class="card-body">
+                                            <h3 class="card-text text-center">Add Account</h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-md-4 mb-5">
+                                <a href="{% url 'money:add_money' %}" class="text-decoration-none">
+                                    <div class="card card-bg card-shadow text-white p-5">
+                                        <div class="card-body">
+                                            <h3 class="card-text text-center">Add Money</h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-md-4 mb-5">
+                                <div class="card card-bg card-shadow text-white p-5">
+                                    <div class="card-body">
+                                        <h3 class="card-text text-center">card body</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

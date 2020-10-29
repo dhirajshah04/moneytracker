@@ -26,7 +26,7 @@ def user_login(request):
                 login(request, user)
                 if next:
                     return redirect(next)
-                return HttpResponse('Logged in')
+                return redirect('pages:user_dashboard')
 
     context['form'] = form
     return render(request, 'users/login.html', context)

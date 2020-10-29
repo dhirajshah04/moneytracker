@@ -11,7 +11,8 @@ def add_account(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            account = form.save()
+            account = form.save(commit=False)
+            account.user = request.user
             account.save()
 
             messages.info(request, 'New Account Created')
