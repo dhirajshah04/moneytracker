@@ -1,0 +1,28 @@
+<div>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Money Tracker</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="{% url 'money:list_account' %}">Accounts</a>
+            </li>
+            <li>
+                <a href="{% url 'money:add_account' %}">Add Accounts</a>
+            </li>
+            <li>
+                <a href="{% url 'money:add_money' %}">Add Money</a>
+            </li>
+
+            <li>
+                <a href="#">Portfolio</a>
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>

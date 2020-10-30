@@ -1,0 +1,30 @@
+{% extends 'user_dashboard_base.html' %}
+
+{% block title %}Accounts List {% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-12">
+            <h3 class="text-center">Accounts List</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for account in account_list %}
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="card card-shadow card-bg1 mt-3 ml-3 mb-3 p-3 text-center text-white">
+                        <div class="card-body">
+                            <h3>{{ account.account_name }}</h3>
+                            <h5 class="lead">{{ account.account_type }}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

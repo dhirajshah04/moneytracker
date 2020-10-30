@@ -4,6 +4,14 @@ from money.forms import AccountCreateForm, AccountEditForm, AddMoneyForm
 from money.models import Account
 
 
+def account_list(request):
+    context = {}
+
+    accounts_list = Account.objects.filter(is_deleted=False, user=request.user)
+    context['account_list'] = accounts_list
+    return render(request, 'money/list_account.html', context)
+
+
 def add_account(request):
     context = {}
 
