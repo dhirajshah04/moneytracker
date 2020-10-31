@@ -7,7 +7,7 @@ from users.forms import UserLoginForm,UserRegisterForm
 def user_login(request):
     next = request.GET.get('next', None)
     if request.user.is_authenticated:
-        return HttpResponse('already logged in')
+        return redirect('money:list_account')
 
     context = {}
 
@@ -26,7 +26,7 @@ def user_login(request):
                 login(request, user)
                 if next:
                     return redirect(next)
-                return redirect('pages:user_dashboard')
+                return redirect('money:list_account')
 
     context['form'] = form
     return render(request, 'users/login.html', context)
