@@ -1,14 +1,17 @@
 from django.contrib import messages
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from money.forms import AccountCreateForm, AccountEditForm, AddMoneyForm
-from money.models import Account
+from money.models import Account, Money
 
 
 def account_list(request):
     context = {}
 
     accounts_list = Account.objects.filter(is_deleted=False, user=request.user)
+    money = Money.objects.filter(user=request.user).aggregate(total=Sum('amount'))
     context['account_list'] = accounts_list
+    context['money'] = money
     return render(request, 'money/list_account.html', context)
 
 
