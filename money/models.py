@@ -11,7 +11,7 @@ ACCOUNT_TYPE = Choices(
 
 
 class Account(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts_user')
     account_name = models.CharField(max_length=255)
     account_type = models.CharField(max_length=100, choices=ACCOUNT_TYPE, default=ACCOUNT_TYPE.Bank)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,8 +25,8 @@ class Account(models.Model):
 
 
 class Money(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moneys')
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='moneys')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moneys_user')
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='moneys_account')
     amount = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h3>{{ account.account_name }}</h3>
                             <h5 class="lead">{{ account.account_type }}</h5>
-                            {% for money in account.moneys.all %}
+                            {% for money in account.moneys_account.all %}
                                 <p class="text-white">RS. {{ money.amount }}</p>
                             {% empty %}
                                 <p class="text-white">RS. 0</p>

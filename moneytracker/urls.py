@@ -9,4 +9,5 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('user/', include('users.urls')),
     path('dashboard/money/', include('money.urls')),
+    path('dashboard/income-expense/', include('income_expense.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

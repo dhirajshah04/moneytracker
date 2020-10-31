@@ -1,0 +1,32 @@
+{% extends 'user_dashboard_base.html' %}
+
+{% block title %}Income Report{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Account</th>
+                            <th>Description</th>
+                            <th>Amount (RS.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for income in income %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ income.account }}</td>
+                                <td>{{ income.description }}</td>
+                                <td>{{ income.income_amount }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
