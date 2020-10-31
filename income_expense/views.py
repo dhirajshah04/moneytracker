@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from income_expense.forms import IncomeForm
 from income_expense.models import Income
@@ -46,5 +47,7 @@ def income_list(request):
     context = {}
 
     income = Income.objects.filter(user=request.user)
+    total_income = income.aggregate(Sum('income_amount'))
     context['income'] = income
+    context['total_income'] = total_income
     return render(request, 'income_expense/income_list.html', context)
