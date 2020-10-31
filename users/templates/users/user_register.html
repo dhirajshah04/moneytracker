@@ -1,110 +1,115 @@
 {% extends 'base.html' %}
 
-{% block title %}User Registration{% endblock %}
+{% block title %} User Registration {% endblock %}
 
 {% block body %}
-    <div class="container-fluid login-register-page-wrap">
-        {% if messages %}
-            <div class="row">
-                <div class="offset-md-3 col-md-6">
-                    {% for message in messages %}
-                        <div class="alert alert-dismissible alert-{{ message.tags }}">
-                            <button type="button" class="close" data-dismiss="alert">X</button>
-                            <p>{{ message }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-md-4 offset-4 my-auto">
 
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <div>
+                {% if messages %}
                     <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="text-center">
-                                Create An Account
-                            </h3>
+                        <div class="offset-md-3 col-md-6">
+                            {% for message in messages %}
+                                <div class="alert alert-dismissible alert-{{ message.tags }}">
+                                    <button type="button" class="close" data-dismiss="alert">X</button>
+                                    <p>{{ message }}</p>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
+                {% endif %}
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form method="post">
-                                {% csrf_token %}
-
-                                <div class="form-group {% if form.first_name.errors %}has-error{% endif %}">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <div class="card card-shadow">
+                    <div class="body">
+                        <div class="card-title mt-5 mb-5">
+                            <h3 class="text-center">Create An Account</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 offset-1 mb-3">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group {% if form.first_name.errors %}has-error{% endif %}">
                                         {{ form.first_name }}
                                         {% if form.first_name.errors %}
                                             <div class="help-block">{{ form.first_name.errors }}</div>
                                         {% endif %}
                                     </div>
-                                </div>
 
-                                <div class="form-group {% if form.last_name.errors %}has-error{% endif %}">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <div class="form-group {% if form.last_name.errors %}has-error{% endif %}">
                                         {{ form.last_name }}
                                         {% if form.last_name.errors %}
                                             <div class="help-block">{{ form.last_name.errors }}</div>
                                         {% endif %}
                                     </div>
-                                </div>
 
-                                <div class="form-group {% if form.username.errors %}has-error{% endif %}">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <div class="form-group {% if form.username.errors %}has-error{% endif %}">
                                         {{ form.username }}
                                         {% if form.username.errors %}
                                             <div class="help-block">{{ form.username.errors }}</div>
                                         {% endif %}
                                     </div>
-                                </div>
 
-                                <div class="form-group {% if form.email.errors %}has-error{% endif %}">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <div class="form-group {% if form.email.errors %}has-error{% endif %}">
                                         {{ form.email }}
                                         {% if form.email.errors %}
                                             <div class="help-block">{{ form.email.errors }}</div>
                                         {% endif %}
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                    <div class="form-group">
                                         {{ form.password }}
                                         {% if form.password.errors %}
                                             <div class="help-block">{{ form.password.errors }}</div>
                                         {% endif %}
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                    <div class="form-group">
                                         {{ form.confirm_password }}
                                         {% if form.confirm_password.errors %}
                                             <div class="help-block">{{ form.confirm_password.errors }}</div>
                                         {% endif %}
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <button class="btn btn-primary btn-block" type="submit" name="submit">
-                                        <i class="fa fa-sign-in-alt"></i>
-                                        Register
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="row">
+                                        <div class="col-md-5 offset-3">
+                                           <div class="form-group pt-3">
+                                                <button class="btn btn-outline-primary btn-block" type="submit" name="submit">
+                                                    Register
+                                                </button>
+                                           </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 offset-3">
+                               <div class="form-group">
+                                   <p>Already have an account?</p>
+                                   <a href="{% url 'users:login' %}" class="text-decoration-none">
+                                       <button class="btn btn-outline-primary btn-block" type="submit" name="submit">
+                                            Login
+                                        </button>
+                                   </a>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8 offset-1">
+                                <small>All Fields are Required</small>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock %}
+
+
+
+
+

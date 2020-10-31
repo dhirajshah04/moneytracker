@@ -15,10 +15,9 @@ hr {
     background-color: #EEEEEE;
 }
 
-.login-register-page-wrap {
-    margin-top: 150px;
-    margin-bottom: 150px;
-}
+/*.login-register-page-wrap {*/
+    /*margin-top: 100px;*/
+/*}*/
 
 .card-shadow {
     border-radius: 5px;
