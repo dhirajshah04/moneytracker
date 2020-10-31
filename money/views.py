@@ -62,7 +62,8 @@ def add_money(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            money = form.save()
+            money = form.save(commit=False)
+            money.user = request.user
             money.save()
 
             messages.info(request, 'Money Added')

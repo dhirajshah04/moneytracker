@@ -15,10 +15,15 @@
         {% for account in account_list %}
             <div class="col-md-4">
                 <a href="#" class="text-decoration-none">
-                    <div class="card card-shadow card-bg1 mt-3 ml-3 mb-3 p-3 text-center text-white">
+                    <div class="card card-shadow card-bg1 mt-3 ml-3 mb-3 text-center text-white">
                         <div class="card-body">
                             <h3>{{ account.account_name }}</h3>
                             <h5 class="lead">{{ account.account_type }}</h5>
+                            {% for money in account.moneys.all %}
+                                <p class="text-white">RS. {{ money.amount }}</p>
+                            {% empty %}
+                                <p class="text-white">RS. 0</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </a>
