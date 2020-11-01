@@ -1,6 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
-
 from users.models import User
 
 
@@ -44,9 +42,31 @@ class UserRegisterForm(forms.ModelForm):
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
 
+        # check for min length
+        min_length = 8
+        if len(password) < min_length:
+            msg = 'Password must be at least %s characters long.' % (str(min_length))
+            self.add_error('password', msg)
+
+        # check for digit
+        if sum(c.isdigit() for c in password) < 1:
+            msg = 'Password must contain at least 1 number.'
+            self.add_error('password', msg)
+
+        # check for uppercase letter
+        if not any(c.isupper() for c in password):
+            msg = 'Password must contain at least 1 uppercase letter.'
+            self.add_error('password', msg)
+
+        # check for lowercase letter
+        if not any(c.islower() for c in password):
+            msg = 'Password must contain at least 1 lowercase letter.'
+            self.add_error('password', msg)
+
         if password and confirm_password:
             if password != confirm_password:
-                raise ValidationError("Passwords didn't match")
+                self.add_error('confirm_password', "Passwords didn't match")
+
         return cleaned_data
 
     class Meta:
@@ -56,6 +76,8 @@ class UserRegisterForm(forms.ModelForm):
             'email',
             'first_name',
             'last_name',
+            'password',
+            'confirm_password',
         }
 
         widgets = {
