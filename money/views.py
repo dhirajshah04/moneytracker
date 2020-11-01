@@ -63,6 +63,9 @@ def add_money(request):
 
     form = AddMoneyForm(request.POST or None)
 
+    # Filters the account foreign key based on user logged in
+    form.fields["account"].queryset = Account.objects.filter(is_deleted=False, user=request.user)
+
     if request.method == 'POST':
         if form.is_valid():
             money = form.save(commit=False)

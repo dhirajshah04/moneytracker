@@ -3,13 +3,16 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect
 from income_expense.forms import IncomeForm
 from income_expense.models import Income
-from money.models import Money
+from money.models import Money, Account
 
 
 def income_add(request):
     context = {}
 
     form = IncomeForm(request.POST or None)
+
+    # Filters the account foreign key based on user logged in
+    form.fields["account"].queryset = Account.objects.filter(is_deleted=False, user=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
