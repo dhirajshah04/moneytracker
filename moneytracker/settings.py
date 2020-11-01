@@ -33,6 +33,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost'])
 # Application definition
 
 INSTALLED_APPS = [
+    'transaction_period',
     'income_expense',
     'pages',
     'money',
