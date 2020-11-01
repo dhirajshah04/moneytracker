@@ -38,7 +38,7 @@
                                 <div class="col-md-9 offset-1">
                                     {{ form.account }}
                                     {% if form.account.errors %}
-                                        <div class="help-block">{{ form.account.errors }}</div>
+                                        <div class="form-text text-danger">{{ form.account.errors }}</div>
                                     {% endif %}
                                 </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="col-md-9 offset-1">
                                     {{ form.description }}
                                     {% if form.description.errors %}
-                                        <div class="help-block">{{ form.description.errors }}</div>
+                                        <div class="form-text text-danger">{{ form.description.errors }}</div>
                                     {% endif %}
                                 </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <div class="col-md-9 offset-1">
                                     {{ form.income_amount }}
                                     {% if form.income_amount.errors %}
-                                        <div class="help-block">{{ form.income_amount.errors }}</div>
+                                        <div class="form-text text-danger">{{ form.income_amount.errors }}</div>
                                     {% endif %}
                                 </div>
                         </div>
