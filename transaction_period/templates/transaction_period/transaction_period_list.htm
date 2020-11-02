@@ -1,0 +1,54 @@
+{% extends 'user_dashboard_base.html' %}
+
+{% block title %}Transaction Period List{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+
+        {% if messages %}
+            <div class="row">
+                <div class="offset-md-2 col-md-6">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible alert-{{ message.tags }}">
+                            <button type="button" class="close" data-dismiss="alert">X</button>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tp in transaction_periods %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ tp.name }}</td>
+                                <td>{{ tp.start_date }}</td>
+                                <td>{{ tp.end_date }}</td>
+                                <td>
+                                    <a href="{% url 'transaction_period:transaction_period_edit' tp.pk %}">
+                                        <button type="button" class="btn btn-primary btn-sm shadow">
+                                            Edit<i class="fas fa-edit p-1"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
