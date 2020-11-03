@@ -1,6 +1,7 @@
 from django.db import models
 from model_utils import Choices
 
+from transaction_period.models import TransactionPeriod
 from users.models import User
 
 ACCOUNT_TYPE = Choices(
@@ -27,6 +28,7 @@ class Account(models.Model):
 class Money(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moneys_user')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='moneys_account')
+    transaction_period = models.ForeignKey(TransactionPeriod, on_delete=models.CASCADE, related_name='moneys_transaction_period')
     amount = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
