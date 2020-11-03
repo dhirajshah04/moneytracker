@@ -3,6 +3,7 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect
 from money.forms import AccountCreateForm, AccountEditForm, AddMoneyForm
 from money.models import Account, Money
+from transaction_period.models import TransactionPeriod
 
 
 def account_list(request):
@@ -61,6 +62,12 @@ def edit_account(request, pk):
 def add_money(request):
     context = {}
 
+    try:
+        active_transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user)
+    except TransactionPeriod.DoesNotExist:
+        messages.error(request, 'Active Transaction Period Not found, please activate or create at least one')
+        return redirect('transaction_period:transaction_period_list')
+
     form = AddMoneyForm(request.POST or None)
 
     # Filters the account foreign key based on user logged in
@@ -70,6 +77,7 @@ def add_money(request):
         if form.is_valid():
             money = form.save(commit=False)
             money.user = request.user
+            money.transaction_period = active_transaction_period
             money.save()
 
             messages.info(request, 'Money Added')

@@ -26,6 +26,7 @@ def income_add(request):
 
             income_amt = form.save(commit=False)
             income_amt.user = request.user
+            income_amt.transaction_period = active_transaction_period
 
             # Updating the Money in accounts section too while adding incomes
 
@@ -42,6 +43,7 @@ def income_add(request):
                 new_money.account = income_amt.account
                 new_money.amount = add_money
                 new_money.user = request.user
+                new_money.transaction_period = active_transaction_period
                 new_money.save()
 
             income_amt.save()
