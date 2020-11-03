@@ -4,10 +4,17 @@ from django.shortcuts import render, redirect
 from income_expense.forms import IncomeForm
 from income_expense.models import Income
 from money.models import Money, Account
+from transaction_period.models import TransactionPeriod
 
 
 def income_add(request):
     context = {}
+
+    try:
+        active_transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user)
+    except TransactionPeriod.DoesNotExist:
+        messages.error(request, 'Active Transaction Period Not found, please activate at least one')
+        return redirect('transaction_period:transaction_period_list')
 
     form = IncomeForm(request.POST or None)
 
@@ -43,13 +50,13 @@ def income_add(request):
             return redirect('income_expense:income_add')
 
     context['form'] = form
-    return  render(request, 'income_expense/income_add.html', context)
+    return render(request, 'income_expense/income_add.html', context)
 
 
 def income_list(request):
     context = {}
 
-    income = Income.objects.filter(user=request.user)
+    income = Income.objects.filter(user=request.user, transaction_period__is_active=True)
     total_income = income.aggregate(Sum('income_amount'))
     context['income'] = income
     context['total_income'] = total_income
