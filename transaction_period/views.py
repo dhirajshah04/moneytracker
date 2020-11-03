@@ -8,7 +8,7 @@ from transaction_period.models import TransactionPeriod
 def transaction_period_list(request):
     context = {}
 
-    transaction_periods = TransactionPeriod.objects.filter(is_active=True)
+    transaction_periods = TransactionPeriod.objects.filter(is_active=True, user=request.user)
     context['transaction_periods'] = transaction_periods
     return render(request, 'transaction_period/transaction_period_list.htm', context)
 
@@ -21,6 +21,7 @@ def transaction_period_create(request):
     if request.method == 'POST':
         if form.is_valid():
             transaction_period = form.save(commit=False)
+            transaction_period.user = request.user
             transaction_period.save()
             messages.info(request, 'New Transaction Period Added')
             return redirect('transaction_period:transaction_period_list')
@@ -33,7 +34,7 @@ def transaction_period_edit(request, pk):
     context = {}
 
     try:
-        transaction_period = TransactionPeriod.objects.get(pk=pk)
+        transaction_period = TransactionPeriod.objects.get(pk=pk, user=request.user)
     except TransactionPeriod.DoesNotExist:
         messages.error(request, 'Transaction Period Does Not Exist!')
         return redirect('transaction_period:transaction_period_list')
@@ -55,10 +56,11 @@ def transaction_period_change(request):
     context = {}
 
     form = TransactionPeriodChangeForm(request.POST or None)
+    form.fields['transaction_period'].queryset = TransactionPeriod.objects.filter(is_active=False, user=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
-            for tp in TransactionPeriod.objects.filter(is_active=True):
+            for tp in TransactionPeriod.objects.filter(is_active=True, user=request.user):
                 tp.is_active = False
                 tp.save()
 
