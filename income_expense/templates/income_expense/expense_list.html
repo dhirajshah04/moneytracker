@@ -1,0 +1,38 @@
+{% extends 'user_dashboard_base.html' %}
+
+{% block title %}Expense Report{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Account</th>
+                            <th>Description</th>
+                            <th>Amount (RS.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expense %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ expense.account }}</td>
+                                <td>{{ expense.description }}</td>
+                                <td>{{ expense.expense_amount }}</td>
+                            </tr>
+                        {% endfor %}
+                            <tr class="font-weight-bold">
+                                <td>Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ total_expense.expense_amount__sum }}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

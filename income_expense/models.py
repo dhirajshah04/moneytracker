@@ -18,3 +18,19 @@ class Income(models.Model):
 
     class Meta:
         db_table = 'income_expense_income'
+
+
+class Expense(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='expenses')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expense_users')
+    transaction_period = models.ForeignKey(TransactionPeriod, on_delete=models.CASCADE, related_name='expense_transaction_period')
+    description = models.CharField(max_length=250)
+    expense_amount = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.expense_amount
+
+    class Meta:
+        db_table = 'income_expense_expense'
