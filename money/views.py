@@ -12,6 +12,7 @@ def account_list(request):
     context = {}
 
     accounts_list = Account.objects.filter(is_deleted=False, user=request.user)
+
     money = Money.objects.filter(user=request.user).aggregate(total=Sum('amount'))
     context['account_list'] = accounts_list
     context['money'] = money
@@ -78,6 +79,12 @@ def add_money(request):
     if request.method == 'POST':
         if form.is_valid():
             money = form.save(commit=False)
+
+            check_money_in_account = Money.objects.filter(user=request.user, account=money.account)
+            if check_money_in_account.exists():
+                messages.error(request, 'Money can be added only once in each Account,please use add income to add money')
+                return redirect('money:list_account')
+
             money.user = request.user
             money.transaction_period = active_transaction_period
 
