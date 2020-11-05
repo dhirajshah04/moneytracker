@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.db.models import Sum
 from django.shortcuts import render, redirect
+
+from income_expense.models import Income
 from money.forms import AccountCreateForm, AccountEditForm, AddMoneyForm
 from money.models import Account, Money
 from transaction_period.models import TransactionPeriod
@@ -78,6 +80,15 @@ def add_money(request):
             money = form.save(commit=False)
             money.user = request.user
             money.transaction_period = active_transaction_period
+
+            income = Income()
+            income.account = money.account
+            income.income_amount = money.amount
+            income.user = request.user
+            income.transaction_period = active_transaction_period
+            income.description = 'First or original balance in {}'.format(money.account.account_name)
+            income.save()
+
             money.save()
 
             messages.info(request, 'Money Added')
