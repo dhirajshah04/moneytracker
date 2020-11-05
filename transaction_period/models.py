@@ -15,3 +15,11 @@ class TransactionPeriod(models.Model):
 
     def __str__(self):
         return self.name
+
+    @staticmethod
+    def get_active_transaction_period(request):
+        try:
+            transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user)
+        except TransactionPeriod.DoesNotExist:
+            transaction_period = None
+        return transaction_period

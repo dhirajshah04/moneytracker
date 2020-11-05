@@ -14,8 +14,10 @@ def account_list(request):
     accounts_list = Account.objects.filter(is_deleted=False, user=request.user)
 
     money = Money.objects.filter(user=request.user).aggregate(total=Sum('amount'))
+    transaction_period = TransactionPeriod.get_active_transaction_period(request)
     context['account_list'] = accounts_list
     context['money'] = money
+    context['transaction_period'] = transaction_period
     return render(request, 'money/list_account.html', context)
 
 
@@ -80,6 +82,8 @@ def add_money(request):
         if form.is_valid():
             money = form.save(commit=False)
 
+            # Check if money in selected account exist and if exist return back to home throwing error
+
             check_money_in_account = Money.objects.filter(user=request.user, account=money.account)
             if check_money_in_account.exists():
                 messages.error(request, 'Money can be added only once in each Account,please use add income to add money')
@@ -87,6 +91,8 @@ def add_money(request):
 
             money.user = request.user
             money.transaction_period = active_transaction_period
+
+            # add money to income model too
 
             income = Income()
             income.account = money.account
