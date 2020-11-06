@@ -18,11 +18,15 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <h2 class="text-center text-uppercase mt-5 mb-5">Income Expense Tracker</h2>
-            <hr>
+            <h2 class="text-center text-uppercase mt-5 mb-1">Income Expense Tracker</h2>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <p class="lead float-right">Welcome {{ request.user.get_full_name }}</p>
+        </div>
+    </div>
+    <hr>
     <div class="row mt-2">
         <div class="col-md-12">
             <div class="card">

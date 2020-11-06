@@ -5,11 +5,18 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-center p-3">Income Report for {{ transaction_period }}</h4>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
+                <p>*Note: This is not your actual balance</p>
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>S.N</th>
+                            <th>Date</th>
                             <th>Account</th>
                             <th>Description</th>
                             <th>Amount (RS.)</th>
@@ -19,16 +26,15 @@
                         {% for income in income %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
+                                <td>{{ income.created_at }}</td>
                                 <td>{{ income.account }}</td>
                                 <td>{{ income.description }}</td>
                                 <td>{{ income.income_amount }}</td>
                             </tr>
                         {% endfor %}
                             <tr class="font-weight-bold">
-                                <td>Total</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ total_income.income_amount__sum }}</td>
+                                <td colspan="4">Total:</td>
+                                <td>RS. {{ total_income.income_amount__sum }}</td>
                             </tr>
                     </tbody>
                 </table>

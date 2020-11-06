@@ -6,13 +6,14 @@
 
 <div class="container-fluid">
     <div class="row mt-3">
-        <div class="col-10">
+        <div class="col-8">
             <h3 class="text-center">Accounts List</h3>
         </div>
 
-        <div class="col-2">
+        <div class="col-4">
             <div class="float-right">
                 <a href="{% url 'money:add_account' %}" class="btn btn-sm btn-primary">New Account</a>
+                <a href="{% url 'money:add_money' %}" class="btn btn-sm btn-success">Add Money</a>
             </div>
         </div>
     </div>
