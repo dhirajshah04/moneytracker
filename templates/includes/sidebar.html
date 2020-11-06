@@ -2,27 +2,45 @@
     <!-- Sidebar -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Money Tracker</h3>
+            <h3><a href={% url 'money:list_account' %}>Money Tracker</a></h3>
         </div>
 
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="{% url 'money:list_account' %}">Accounts</a>
+                <a href="#accounts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account</a>
+                <ul class="collapse list-unstyled" id="accounts">
+                    <li>
+                        <a href="{% url 'money:list_account' %}">Accounts List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'money:add_account' %}">New Account</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'money:add_money' %}">Add Money</a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="{% url 'money:add_money' %}">Add Money</a>
+                <a href="#incomes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Income</a>
+                <ul class="collapse list-unstyled" id="incomes">
+                    <li>
+                        <a href="{% url 'income_expense:income_add' %}">Add Income</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'income_expense:income_list' %}">Income Report</a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="{% url 'income_expense:income_add' %}">Incomes</a>
-            </li>
-            <li>
-                <a href="{% url 'income_expense:income_list' %}">Income Report</a>
-            </li>
-            <li>
-                <a href="{% url 'income_expense:expense_add' %}">Expenses</a>
-            </li>
-            <li>
-                <a href="{% url 'income_expense:expense_list' %}">Expense Report</a>
+                <a href="#expenses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Expense</a>
+                <ul class="collapse list-unstyled" id="expenses">
+                    <li>
+                        <a href="{% url 'income_expense:expense_add' %}">Add Expense</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'income_expense:expense_list' %}">Expense Report</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="{% url 'transaction_period:transaction_period_list' %}">Transaction Period</a>
