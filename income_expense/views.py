@@ -33,7 +33,7 @@ def income_add(request):
             account_id = income_amt.account.id  # Takes account ID from income form, select account filed
 
             try:
-                account_money = Money.objects.get(account_id=account_id)  # Filters the money model related to the accound_id
+                account_money = Money.objects.get(account_id=account_id, transaction_period__is_active=True)  # Filters the money model related to the accound_id
                 add_money = form.cleaned_data.get('income_amount')  # Gets income amount from income form
                 account_money.amount = account_money.amount + add_money  # Adds income amount to existing amount in account
                 account_money.save()
@@ -105,7 +105,7 @@ def expense_add(request):
             account_id = expense_amt.account.id  # Takes account ID from income form, select account filed
 
             try:
-                account_money = Money.objects.get(account_id=account_id)  # Filters the money model related to the accound_id
+                account_money = Money.objects.get(account_id=account_id, transaction_period__is_active=True)  # Filters the money model related to the accound_id
                 spent_money = form.cleaned_data.get('expense_amount')  # Gets income amount from income form
                 account_money.amount = account_money.amount - spent_money  # Adds income amount to existing amount in account
                 account_money.save()

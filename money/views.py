@@ -11,12 +11,12 @@ from transaction_period.models import TransactionPeriod
 def account_list(request):
     context = {}
 
-    accounts_list = Account.objects.filter(is_deleted=False, user=request.user)
-
-    money = Money.objects.filter(user=request.user).aggregate(total=Sum('amount'))
     transaction_period = TransactionPeriod.get_active_transaction_period(request)
-    context['account_list'] = accounts_list
-    context['money'] = money
+    account_list_with_money = Money.objects.filter(user=request.user, transaction_period__is_active=True)
+    sum_money = account_list_with_money.aggregate(total=Sum('amount'))
+
+    context['account_list_with_money'] = account_list_with_money
+    context['sum_money'] = sum_money
     context['transaction_period'] = transaction_period
     return render(request, 'money/list_account.html', context)
 

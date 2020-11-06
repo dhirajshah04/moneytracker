@@ -66,3 +66,19 @@ class TransactionPeriodChangeForm(forms.Form):
         empty_label='Select Transaction Period',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+
+class CloseTransactionPeriodForm(forms.ModelForm):
+
+    name = forms.ModelChoiceField(
+        label='Transaction Periods',
+        queryset=TransactionPeriod.objects.filter(is_active=False),
+        empty_label='Select New Transaction Period',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = TransactionPeriod
+        fields = {
+            'name'
+        }

@@ -1,0 +1,61 @@
+{% extends 'user_dashboard_base.html' %}
+
+{% block title %}Close Transaction Period{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center p-3">Close Transaction Period</h3>
+            </div>
+        </div>
+        <hr>
+
+        {% if messages %}
+            <div class="row">
+                <div class="offset-2 col-md-6">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible alert-{{ message.tags }}">
+                            <button type="button" class="close" data-dismiss="alert">X</button>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" class="pt-3">
+                    {% csrf_token %}
+                    <div class="form-group {% if form.name.errors %}has-error{% endif %}">
+                        <label class="col-md-3 offset-1">{{ form.name.label }} <span class="text-danger required-field">*</span></label>
+                            <div class="col-md-9 offset-1">
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <div class="form-text text-danger">{{ form.name.errors }}</div>
+                                {% endif %}
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="offset-1 col-md-3">
+                            <button type="submit" name="submit" class="mt-4 btn btn-primary btn-block border-0 button-bg">Close and Transfer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-10 offset-1">
+                <h3><u>Things To Note</u></h3>
+                <uL>
+                    <li>The above form will close the currently active transaction period</li>
+                    <li>In the select field above, select the transaction period which you want to activate or use next.</li>
+                    <li>Final Balance from current active transaction period will be transferred to above selected transaction period as opening balance.</li>
+                    <li>After the transfer is complete, selected transaction period will be activated.</li>
+                </uL>
+            </div>
+        </div>
+    </div>
+{% endblock %}

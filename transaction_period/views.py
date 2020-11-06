@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-from transaction_period.forms import TransactionPeriodCreateForm, TransactionPeriodChangeForm
+from money.models import Account, Money
+from transaction_period.forms import TransactionPeriodCreateForm, TransactionPeriodChangeForm, \
+    CloseTransactionPeriodForm
 from transaction_period.models import TransactionPeriod
 
 
@@ -81,4 +83,34 @@ def transaction_period_change(request):
 
 
 def close_transaction_period(request):
-    pass
+    context = {}
+    money = Money.objects.filter(transaction_period__is_active=True,  user=request.user)
+
+    form = CloseTransactionPeriodForm(request.POST or None)
+    form.fields['name'].queryset = TransactionPeriod.objects.filter(is_active=False, user=request.user)
+
+    if request.method == 'POST':
+        if form.is_valid():
+
+            # closing active transaction period and adding opening balance in new transaction period
+
+            for m in money:
+                new_m = Money()
+                new_m.amount = m.amount
+                new_m.account = m.account
+                new_m.user = request.user
+                new_m.transaction_period = form.cleaned_data['name']
+                new_m.save()
+
+            for atp in TransactionPeriod.objects.filter(is_active=True, user=request.user):
+                atp.is_active = False
+                atp.save()
+
+            tp = form.cleaned_data['name']
+            tp.is_active = True
+            tp.save()
+
+            return redirect('transaction_period:transaction_period_close')
+    context['form'] = form
+    context['money'] = money
+    return render(request, 'transaction_period/transaction_period_close.html', context)

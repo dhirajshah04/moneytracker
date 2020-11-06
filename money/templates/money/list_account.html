@@ -32,18 +32,18 @@
     {% endif %}
 
     <div class="row">
-        {% for account in account_list %}
+        {% for account in account_list_with_money %}
             <div class="col-md-4">
                 <a href="#" class="text-decoration-none">
                     <div class="card card-shadow card-bg1 mt-3 ml-3 mb-3 text-center text-white">
                         <div class="card-body">
-                            <h3>{{ account.account_name }}</h3>
-                            <h5 class="lead">{{ account.account_type }}</h5>
-                            {% for money in account.moneys_account.all %}
-                                <p class="text-white">RS. {{ money.amount }}</p>
-                            {% empty %}
+                            <h3>{{ account.account }}</h3>
+                            <h5 class="lead">{{ account.account.account_type }}</h5>
+                            {% if account.amount %}
+                                <p class="text-white">RS. {{ account.amount }}</p>
+                            {% else %}
                                 <p class="text-white">RS. 0</p>
-                            {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </a>
@@ -59,7 +59,7 @@
             {% endif %}
         </div>
         <div class="col-md-6 text-right">
-            <h3>RS. {{ money.total }}</h3>
+            <h3>RS. {{ sum_money.total }}</h3>
         </div>
     </div>
 </div>
