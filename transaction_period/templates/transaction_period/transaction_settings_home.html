@@ -1,0 +1,77 @@
+{% extends 'user_dashboard_base.html' %}
+
+{% block title %}Transaction Settings{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center p-3">Transaction Settings</h3>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="row">
+                <div class="offset-2 col-md-6">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible alert-{{ message.tags }}">
+                            <button type="button" class="close" data-dismiss="alert">X</button>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <a href="{% url 'transaction_period:transaction_period_list' %}">
+                    <div class="card card-shadow card-bg1 text-white">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <i class="far fa-calendar-alt fa-2x"></i>
+                                <h4 class="p-1">Transaction Periods List</h4>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'transaction_period:transaction_period_create' %}">
+                    <div class="card card-shadow card-bg1 text-white">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <i class="fas fa-plus fa-2x"></i>
+                                <h4 class="p-1">New Transaction Period</h4>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'transaction_period:transaction_period_change' %}">
+                    <div class="card card-shadow card-bg1 text-white">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <i class="fas fa-exchange-alt fa-2x"></i>
+                                <h4 class="p-1">Change Transaction Period</h4>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'transaction_period:transaction_period_close' %}">
+                    <div class="card card-shadow card-bg1 text-white">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <i class="fas fa-file-invoice-dollar fa-2x"></i>
+                                <h4 class="p-1">Close Transaction Period</h4>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

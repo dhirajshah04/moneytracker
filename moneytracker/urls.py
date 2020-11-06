@@ -10,5 +10,5 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('dashboard/money/', include('money.urls')),
     path('dashboard/income-expense/', include('income_expense.urls')),
-    path('dashboard/transaction-period/', include('transaction_period.urls')),
+    path('dashboard/transaction/', include('transaction_period.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

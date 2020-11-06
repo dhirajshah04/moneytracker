@@ -5,6 +5,11 @@ from transaction_period.forms import TransactionPeriodCreateForm, TransactionPer
 from transaction_period.models import TransactionPeriod
 
 
+def transaction_settings_home(request):
+    context = {}
+    return render(request, 'transaction_period/transaction_settings_home.html', context)
+
+
 def transaction_period_list(request):
     context = {}
 
@@ -73,3 +78,7 @@ def transaction_period_change(request):
 
     context['form'] = form
     return render(request, 'transaction_period/transaction_period_change.html', context)
+
+
+def close_transaction_period(request):
+    pass
