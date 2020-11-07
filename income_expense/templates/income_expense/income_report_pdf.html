@@ -1,6 +1,5 @@
-{% extends 'user_dashboard_base.html' %}
+{% extends 'pdf_base.html' %}
 
-{% block title %}Income Report{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
@@ -10,9 +9,13 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <p><b>From:</b> {{ transaction_period.start_date }}, <b>To:</b> {{ transaction_period.end_date }}</p>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
-                <p>*Note: This is not your actual balance <span><a href="{% url 'income_expense:income_list' %}?pdf_report=pdf" target="_blank" class="btn btn-sm btn-primary float-right">PDF Report</a></span></p>
-
+                <p>*Note: This is not your actual balance</p>
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
