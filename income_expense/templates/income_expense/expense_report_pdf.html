@@ -1,6 +1,5 @@
-{% extends 'user_dashboard_base.html' %}
+{% extends 'pdf_base.html' %}
 
-{% block title %}Expense Report{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
@@ -10,9 +9,12 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <p><b>From:</b> {{ transaction_period.start_date }}, <b>To:</b> {{ transaction_period.end_date }}</p>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
-            <a href="{% url 'income_expense:expense_list' %}?pdf_report=pdf" target="_blank"
-               class="btn btn-sm btn-primary float-right">PDF Report</a>
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
@@ -34,7 +36,7 @@
                             </tr>
                         {% endfor %}
                             <tr class="font-weight-bold">
-                                <td colspan="4">Total</td>
+                                <td colspan="4">Total:</td>
                                 <td>RS. {{ total_expense.expense_amount__sum }}</td>
                             </tr>
                     </tbody>

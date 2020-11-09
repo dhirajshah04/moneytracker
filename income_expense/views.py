@@ -78,12 +78,19 @@ def income_list(request):
 def expense_list(request):
     context = {}
 
+    pdf_report = request.GET.get('pdf_report', '')
+
     expense = Expense.objects.filter(user=request.user, transaction_period__is_active=True)
     total_expense = expense.aggregate(Sum('expense_amount'))
     transaction_period = TransactionPeriod.get_active_transaction_period(request)
     context['expense'] = expense
     context['total_expense'] = total_expense
     context['transaction_period'] = transaction_period
+
+    if pdf_report == 'pdf':
+        return render_pdf('income_expense/expense_report_pdf.html', context,
+                          filename='expense_report_{}.pdf'.format(transaction_period))
+
     return render(request, 'income_expense/expense_list.html', context)
 
 
