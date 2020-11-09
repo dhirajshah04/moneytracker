@@ -6,8 +6,10 @@ from income_expense.models import Income
 from money.forms import AccountCreateForm, AccountEditForm, AddMoneyForm
 from money.models import Account, Money
 from transaction_period.models import TransactionPeriod
+from users.decorators import login_required
 
 
+@login_required
 def account_list(request):
     context = {}
 
@@ -21,6 +23,7 @@ def account_list(request):
     return render(request, 'money/list_account.html', context)
 
 
+@login_required
 def add_account(request):
     context = {}
 
@@ -39,6 +42,7 @@ def add_account(request):
     return render(request, 'money/add_account.html', context)
 
 
+@login_required
 def edit_account(request, pk):
     context = {}
 
@@ -63,7 +67,7 @@ def edit_account(request, pk):
 
 
 # delete account
-
+@login_required
 def add_money(request):
     context = {}
 

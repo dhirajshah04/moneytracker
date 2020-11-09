@@ -6,8 +6,10 @@ from income_expense.models import Income, Expense
 from money.models import Money, Account
 from moneytracker.utils import render_pdf
 from transaction_period.models import TransactionPeriod
+from users.decorators import login_required
 
 
+@login_required
 def income_add(request):
     context = {}
 
@@ -56,6 +58,7 @@ def income_add(request):
     return render(request, 'income_expense/income_add.html', context)
 
 
+@login_required
 def income_list(request):
     context = {}
 
@@ -75,6 +78,7 @@ def income_list(request):
     return render(request, 'income_expense/income_list.html', context)
 
 
+@login_required
 def expense_list(request):
     context = {}
 
@@ -94,6 +98,7 @@ def expense_list(request):
     return render(request, 'income_expense/expense_list.html', context)
 
 
+@login_required
 def expense_add(request):
     context = {}
 

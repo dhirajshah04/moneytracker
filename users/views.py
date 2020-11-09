@@ -1,13 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
-from django.shortcuts import render, redirect, HttpResponse
-from users.forms import UserLoginForm,UserRegisterForm
+from django.shortcuts import render, redirect
+
+from users.decorators import unauthenticated_user, login_required
+from users.forms import UserLoginForm, UserRegisterForm
+from users.models import USER_ROLES
 
 
+@unauthenticated_user
 def user_login(request):
     next = request.GET.get('next', None)
-    if request.user.is_authenticated:
-        return redirect('money:list_account')
 
     context = {}
 
@@ -32,12 +34,14 @@ def user_login(request):
     return render(request, 'users/login.html', context)
 
 
+@login_required
 def user_logout(request):
     logout(request)
     messages.info(request, "Logged out Successfully!")
     return redirect('users:login')
 
 
+@unauthenticated_user
 def user_register(request):
     context = {}
 
@@ -51,6 +55,7 @@ def user_register(request):
             user.last_name = form.cleaned_data.get('last_name')
             raw_password = form.cleaned_data.get('password')
             user.set_password(raw_password)
+            user.role = USER_ROLES.enduser
             user.save()
             messages.info(request, 'User Created, please login')
             return redirect('users:login')

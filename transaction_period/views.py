@@ -5,13 +5,16 @@ from money.models import Account, Money
 from transaction_period.forms import TransactionPeriodCreateForm, TransactionPeriodChangeForm, \
     CloseTransactionPeriodForm
 from transaction_period.models import TransactionPeriod
+from users.decorators import login_required
 
 
+@login_required
 def transaction_settings_home(request):
     context = {}
     return render(request, 'transaction_period/transaction_settings_home.html', context)
 
 
+@login_required
 def transaction_period_list(request):
     context = {}
 
@@ -20,6 +23,7 @@ def transaction_period_list(request):
     return render(request, 'transaction_period/transaction_period_list.htm', context)
 
 
+@login_required
 def transaction_period_create(request):
     context = {}
 
@@ -37,6 +41,7 @@ def transaction_period_create(request):
     return render(request, 'transaction_period/transaction_period_add.htm', context)
 
 
+@login_required
 def transaction_period_edit(request, pk):
     context = {}
 
@@ -59,6 +64,7 @@ def transaction_period_edit(request, pk):
     return render(request, 'transaction_period/transaction_period_edit.htm', context)
 
 
+@login_required
 def transaction_period_change(request):
     context = {}
 
@@ -82,6 +88,7 @@ def transaction_period_change(request):
     return render(request, 'transaction_period/transaction_period_change.html', context)
 
 
+@login_required
 def close_transaction_period(request):
     context = {}
     money = Money.objects.filter(transaction_period__is_active=True,  user=request.user)
