@@ -99,7 +99,7 @@ def add_money(request):
             income.income_amount = money.amount
             income.user = request.user
             income.transaction_period = active_transaction_period
-            income.description = 'First or original balance in {}'.format(money.account.account_name)
+            income.description = 'Balance added directly in {}'.format(money.account.account_name)
             income.save()
 
             money.save()
