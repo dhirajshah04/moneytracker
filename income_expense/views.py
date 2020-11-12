@@ -14,9 +14,9 @@ def income_add(request):
     context = {}
 
     try:
-        active_transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user)
+        active_transaction_period = TransactionPeriod.objects.get(is_active=True, is_closed=False, user=request.user)
     except TransactionPeriod.DoesNotExist:
-        messages.error(request, 'Active Transaction Period Not found, please activate at least one')
+        messages.error(request, 'Active and open Transaction Period Not found, please activate and open at least one')
         return redirect('transaction_period:transaction_period_list')
 
     form = IncomeForm(request.POST or None)
@@ -36,7 +36,8 @@ def income_add(request):
             account_id = income_amt.account.id  # Takes account ID from income form, select account filed
 
             try:
-                account_money = Money.objects.get(account_id=account_id, transaction_period__is_active=True)  # Filters the money model related to the accound_id
+                account_money = Money.objects.get(account_id=account_id, transaction_period__is_active=True,
+                                                  transaction_period__is_closed=False)  # Filters the money model related to the accound_id
                 add_money = form.cleaned_data.get('income_amount')  # Gets income amount from income form
                 account_money.amount = account_money.amount + add_money  # Adds income amount to existing amount in account
                 account_money.save()
@@ -103,9 +104,9 @@ def expense_add(request):
     context = {}
 
     try:
-        active_transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user)
+        active_transaction_period = TransactionPeriod.objects.get(is_active=True, is_closed=False, user=request.user)
     except TransactionPeriod.DoesNotExist:
-        messages.error(request, 'Active Transaction Period Not found, please activate at least one')
+        messages.error(request, 'Active and open Transaction Period Not found, please activate and open at least one')
         return redirect('transaction_period:transaction_period_list')
 
     form = ExpenseForm(request.POST or None)
@@ -125,7 +126,8 @@ def expense_add(request):
             account_id = expense_amt.account.id  # Takes account ID from income form, select account filed
 
             try:
-                account_money = Money.objects.get(account_id=account_id, transaction_period__is_active=True)  # Filters the money model related to the accound_id
+                account_money = Money.objects.get(account_id=account_id, transaction_period__is_active=True,
+                                                  transaction_period__is_closed=False)  # Filters the money model related to the accound_id
                 spent_money = form.cleaned_data.get('expense_amount')  # Gets income amount from income form
                 account_money.amount = account_money.amount - spent_money  # Adds income amount to existing amount in account
                 account_money.save()

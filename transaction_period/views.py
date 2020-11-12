@@ -18,7 +18,7 @@ def transaction_settings_home(request):
 def transaction_period_list(request):
     context = {}
 
-    transaction_periods = TransactionPeriod.objects.filter(is_active=True, user=request.user)
+    transaction_periods = TransactionPeriod.objects.filter(is_active=True, is_closed=False, user=request.user)
     context['transaction_periods'] = transaction_periods
     return render(request, 'transaction_period/transaction_period_list.htm', context)
 
@@ -91,10 +91,17 @@ def transaction_period_change(request):
 @login_required
 def close_transaction_period(request):
     context = {}
-    money = Money.objects.filter(transaction_period__is_active=True,  user=request.user)
+
+    active_transaction_period = TransactionPeriod.get_active_transaction_period(request)
+    if active_transaction_period.is_closed:
+        messages.error(request, 'Currently Active Transaction Period is already Closed')
+        return redirect('transaction_period:transaction_settings_home')
+
+    money = Money.objects.filter(transaction_period__is_active=True, transaction_period__is_closed=False,
+                                 user=request.user)
 
     form = CloseTransactionPeriodForm(request.POST or None)
-    form.fields['name'].queryset = TransactionPeriod.objects.filter(is_active=False, user=request.user)
+    form.fields['name'].queryset = TransactionPeriod.objects.filter(is_active=False, is_closed=False, user=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -109,8 +116,9 @@ def close_transaction_period(request):
                 new_m.transaction_period = form.cleaned_data['name']
                 new_m.save()
 
-            for atp in TransactionPeriod.objects.filter(is_active=True, user=request.user):
+            for atp in TransactionPeriod.objects.filter(is_active=True, is_closed=False, user=request.user):
                 atp.is_active = False
+                atp.is_closed = True
                 atp.save()
 
             tp = form.cleaned_data['name']

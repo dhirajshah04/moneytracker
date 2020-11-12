@@ -30,7 +30,13 @@
                                 <td>{{ account.created_at }}</td>
                                 <td>{{ account.account_name }}</td>
                                 <td>{{ account.account_type }}</td>
-                                <td>{% get_money_active_transaction_account account.id %}</td>
+                                <td>
+                                    {% if transaction_period.is_closed %}
+                                        <p>RS. {% get_money_close_transaction_account account.id %}</p>
+                                    {% else %}
+                                        <p>RS. {% get_money_active_transaction_account account.id %}</p>
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <a href="{% url 'money:edit_account' account.pk %}">
                                         <button type="button" class="btn btn-info btn-sm shadow">

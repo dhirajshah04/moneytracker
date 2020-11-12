@@ -6,7 +6,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="text-center p-3">Income Report for {{ transaction_period }}</h4>
+                <h4 class="text-center p-3">Income Report for {{ transaction_period }}
+                    {% if transaction_period.is_closed %}(Closed){% endif %}
+                </h4>
             </div>
         </div>
         <div class="row">

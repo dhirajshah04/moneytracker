@@ -15,6 +15,9 @@ def manage_account(request):
 
     accounts = Account.objects.filter(is_deleted=False, user=request.user,
                                       moneys_account__transaction_period__is_active=True)
+    transaction_period = TransactionPeriod.get_active_transaction_period(request)
+
+    context['transaction_period'] = transaction_period
     context['accounts'] = accounts
     return render(request, 'money/manage_accounts.html', context)
 
@@ -85,9 +88,9 @@ def add_money(request):
     context = {}
 
     try:
-        active_transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user)
+        active_transaction_period = TransactionPeriod.objects.get(is_active=True, user=request.user, is_closed=False)
     except TransactionPeriod.DoesNotExist:
-        messages.error(request, 'Active Transaction Period Not found, please activate or create at least one')
+        messages.error(request, 'Active and opne Transaction Period Not found, please open activate or create at least one')
         return redirect('transaction_period:transaction_period_list')
 
     form = AddMoneyForm(request.POST or None)
