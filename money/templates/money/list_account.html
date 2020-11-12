@@ -1,4 +1,5 @@
 {% extends 'user_dashboard_base.html' %}
+{% load money_tags %}
 
 {% block title %}Accounts List {% endblock %}
 
@@ -31,20 +32,15 @@
         </div>
     {% endif %}
 
-    {% if account_list_with_money %}
         <div class="row">
-            {% for account in account_list_with_money %}
+            {% for account in accounts %}
                 <div class="col-md-4">
                     <a href="#" class="text-decoration-none">
                         <div class="card card-shadow card-bg1 mt-3 ml-3 mb-3 text-center text-white">
                             <div class="card-body">
-                                <h3>{{ account.account }}</h3>
-                                <h5 class="lead">{{ account.account.account_type }}</h5>
-                                {% if account.amount %}
-                                    <p class="text-white">RS. {{ account.amount }}</p>
-                                {% else %}
-                                    <p class="text-white">RS. 0</p>
-                                {% endif %}
+                                <h3>{{ account.account_name }}</h3>
+                                <h5 class="lead">{{ account.account_type }}</h5>
+                                <p class="text-white">RS. {% get_money_active_transaction_account account.id %}</p>
                             </div>
                         </div>
                     </a>
@@ -60,12 +56,9 @@
                 {% endif %}
             </div>
             <div class="col-md-6 text-right">
-                <h3>RS. {{ sum_money.total }}</h3>
+                <h3>RS. {{ total_amount.total }}</h3>
             </div>
         </div>
-    {% else %}
-        <h5 class="m-5">The accounts information will show up here after an account is created and money is added!</h5>
-    {% endif %}
 </div>
 
 {% endblock %}

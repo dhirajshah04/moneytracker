@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from model_utils import Choices
 
 from transaction_period.models import TransactionPeriod
@@ -37,3 +38,8 @@ class Money(models.Model):
 
     class Meta:
         db_table = 'money_money'
+
+    @staticmethod
+    def get_total_amount_in_account(user):
+        total_amount = Money.objects.filter(transaction_period__is_active=True, user=user).aggregate(total=Sum('amount'))
+        return total_amount

@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.db.models import Sum
 from django.shortcuts import render, redirect
 
 from income_expense.models import Income
@@ -24,13 +23,15 @@ def manage_account(request):
 @login_required
 def account_list(request):
     context = {}
+    accounts = Account.objects.filter(is_deleted=False, user=request.user,
+                                      moneys_account__transaction_period__is_active=True)
+
+    total_amount = Money.get_total_amount_in_account(user=request.user)
 
     transaction_period = TransactionPeriod.get_active_transaction_period(request)
-    account_list_with_money = Money.objects.filter(user=request.user, transaction_period__is_active=True)
-    sum_money = account_list_with_money.aggregate(total=Sum('amount'))
 
-    context['account_list_with_money'] = account_list_with_money
-    context['sum_money'] = sum_money
+    context['total_amount'] = total_amount
+    context['accounts'] = accounts
     context['transaction_period'] = transaction_period
     return render(request, 'money/list_account.html', context)
 
