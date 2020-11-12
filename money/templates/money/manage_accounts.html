@@ -1,0 +1,53 @@
+{% extends 'user_dashboard_base.html' %}
+{% load money_tags %}
+
+{% block title %} Manage Accounts {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-center p-3">Manage Accounts</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>S.N</th>
+                            <th>Created Date</th>
+                            <th>Account Name</th>
+                            <th>Account Type</th>
+                            <th>Amount (RS.)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in accounts %}
+                            <tr class="text-center">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ account.created_at }}</td>
+                                <td>{{ account.account_name }}</td>
+                                <td>{{ account.account_type }}</td>
+                                <td>{% get_money_active_transaction_account account.id %}</td>
+                                <td>
+                                    <a href="{% url 'money:edit_account' account.pk %}">
+                                        <button type="button" class="btn btn-info btn-sm shadow">
+                                            Edit<i class="fas fa-edit p-1"></i>
+                                        </button>
+                                    </a>
+                                    <a href="#">
+                                        <button type="button" class="btn btn-danger btn-sm shadow">
+                                            Delete<i class="fas fa-trash-alt p-1"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

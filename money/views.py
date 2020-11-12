@@ -9,6 +9,18 @@ from transaction_period.models import TransactionPeriod
 from users.decorators import login_required
 
 
+# To list all the accounts and edit or delete the account
+@login_required
+def manage_account(request):
+    context = {}
+
+    accounts = Account.objects.filter(is_deleted=False, user=request.user,
+                                      moneys_account__transaction_period__is_active=True)
+    context['accounts'] = accounts
+    return render(request, 'money/manage_accounts.html', context)
+
+
+# Lists account on homepage with the amount in the respective account
 @login_required
 def account_list(request):
     context = {}

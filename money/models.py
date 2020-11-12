@@ -33,7 +33,7 @@ class Money(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.amount
+        return str(self.amount)
 
     class Meta:
         db_table = 'money_money'

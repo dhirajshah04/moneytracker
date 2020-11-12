@@ -1,61 +1,64 @@
-{% extends 'base.html' %}
+{% extends 'user_dashboard_base.html' %}
 
 {% block title %}Edit Account{% endblock %}
 
 {% block body %}
 
-    <div class="container-fluid h-100">
+    <div class="container-fluid">
 
-        {% if messages %}
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    {% for message in messages %}
-                        <div class="alert alert-dismissible alert-{{ message.tags }}">
-                            <button type="button" class="close" data-dismiss="alert">X</button>
-                            <p>{{ message }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-
-        <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-md-6 offset-md-2">
-                <div class="row">
-                    <div class="col-md-9">
-                        <h4>Edit Account | <small>Edit Account</small></h4>
-                        <hr>
-                    </div>
-                </div>
-
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="form-group {% if form.account_name.errors %}has-error{% endif %}">
-                        <label class="col-md-3">{{ form.account_name.label }} <span class="text-danger required-field">*</span></label>
-                            <div class="col-md-9">
-                                {{ form.account_name }}
-                                {% if form.account_name.errors %}
-                                    <div class="form-text text-danger">{{ form.account_name.errors }}</div>
-                                {% endif %}
-                            </div>
-                    </div>
-
-                    <div class="form-group {% if form.account_type.errors %}has-error{% endif %}">
-                        <label class="col-md-3">{{ form.account_type.label }} <span class="text-danger required-field">*</span></label>
-                            <div class="col-md-9">
-                                {{ form.account_type }}
-                                {% if form.account_type.errors %}
-                                    <div class="form-text text-danger">{{ form.account_type.errors }}</div>
-                                {% endif %}
-                            </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="offset-md-3 col-md-2">
-                            <button type="submit" name="submit" class="btn btn-primary btn-block">Update</button>
+        <div class="row mt-5">
+            <div class="col-md-8 offset-2">
+                <div class="card card-bg card-shadow text-white mb-5">
+                    <div class="row mt-5 mb-3">
+                        <div class="col-md-9 offset-1">
+                            <h4>Edit Account</h4>
+                            <hr>
                         </div>
                     </div>
-                </form>
+
+                    {% if messages %}
+                        <div class="row">
+                            <div class="offset-md-2 col-md-6">
+                                {% for message in messages %}
+                                    <div class="alert alert-dismissible alert-{{ message.tags }}">
+                                        <button type="button" class="close" data-dismiss="alert">X</button>
+                                        <p>{{ message }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group {% if form.account_name.errors %}has-error{% endif %}">
+                            <label class="col-md-3 offset-1">{{ form.account_name.label }} <span class="text-danger required-field">*</span></label>
+                                <div class="col-md-9 offset-1">
+                                    {{ form.account_name }}
+                                    {% if form.account_name.errors %}
+                                        <div class="form-text text-danger">{{ form.account_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                        </div>
+
+                        <div class="form-group {% if form.account_type.errors %}has-error{% endif %}">
+                            <label class="col-md-3 offset-1">{{ form.account_type.label }} <span class="text-danger required-field">*</span></label>
+                                <div class="col-md-9 offset-1">
+                                    {{ form.account_type }}
+                                    {% if form.account_type.errors %}
+                                        <div class="form-text text-danger">{{ form.account_type.errors }}</div>
+                                    {% endif %}
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="offset-md-1 col-md-3">
+                                <button type="submit" name="submit" class="mt-4 btn btn-primary btn-block border-0 button-bg">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
