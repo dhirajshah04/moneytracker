@@ -92,10 +92,10 @@ def transaction_period_change(request):
 def close_transaction_period(request):
     context = {}
 
-    active_transaction_period = TransactionPeriod.get_active_transaction_period(request)
-    if active_transaction_period.is_closed:
-        messages.error(request, 'Currently Active Transaction Period is already Closed')
-        return redirect('transaction_period:transaction_settings_home')
+    # active_transaction_period = TransactionPeriod.get_active_transaction_period(user=request.user)
+    # if active_transaction_period.is_closed:
+    #     messages.error(request, 'Currently Active Transaction Period is already Closed')
+    #     return redirect('transaction_period:transaction_settings_home')
 
     money = Money.objects.filter(transaction_period__is_active=True, transaction_period__is_closed=False,
                                  user=request.user)

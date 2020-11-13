@@ -15,7 +15,7 @@ def manage_account(request):
 
     accounts = Account.objects.filter(is_deleted=False, user=request.user,
                                       moneys_account__transaction_period__is_active=True)
-    transaction_period = TransactionPeriod.get_active_transaction_period(request)
+    transaction_period = TransactionPeriod.get_active_transaction_period(user=request.user)
 
     context['transaction_period'] = transaction_period
     context['accounts'] = accounts
@@ -31,7 +31,7 @@ def account_list(request):
 
     total_amount = Money.get_total_amount_in_account(user=request.user)
 
-    transaction_period = TransactionPeriod.get_active_transaction_period(request)
+    transaction_period = TransactionPeriod.get_active_transaction_period(user=request.user)
 
     context['total_amount'] = total_amount
     context['accounts'] = accounts

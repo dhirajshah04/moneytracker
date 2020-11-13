@@ -67,7 +67,7 @@ def income_list(request):
 
     income = Income.objects.filter(user=request.user, transaction_period__is_active=True)
     total_income = income.aggregate(Sum('income_amount'))
-    transaction_period = TransactionPeriod.get_active_transaction_period(request)
+    transaction_period = TransactionPeriod.get_active_transaction_period(user=request.user)
     context['income'] = income
     context['total_income'] = total_income
     context['transaction_period'] = transaction_period
@@ -87,7 +87,7 @@ def expense_list(request):
 
     expense = Expense.objects.filter(user=request.user, transaction_period__is_active=True)
     total_expense = expense.aggregate(Sum('expense_amount'))
-    transaction_period = TransactionPeriod.get_active_transaction_period(request)
+    transaction_period = TransactionPeriod.get_active_transaction_period(user=request.user)
     context['expense'] = expense
     context['total_expense'] = total_expense
     context['transaction_period'] = transaction_period
