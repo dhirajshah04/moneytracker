@@ -39,7 +39,6 @@
         </div>
     {% endif %}
 
-    {% if accounts %}
         <div class="row">
             {% for account in accounts %}
                 <div class="col-md-4">
@@ -77,13 +76,6 @@
                 {% endif %}
             </div>
         </div>
-    {% else %}
-        <h3 class="text-center mt-5 pt-5">No accounts Found</h3>
-        <ul>
-            <li>Create New account using <strong>New Account</strong> button on the top right.</li>
-            <li><strong>Add money</strong> in the created account.</li>
-        </ul>
-    {% endif %}
 </div>
 
 {% endblock %}
