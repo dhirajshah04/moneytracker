@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="text-center p-3">Income Report for {{ transaction_period }}
+                <h4 class="text-center p-3">Income Report {% if transaction_period %} for {{ transaction_period }}{% endif %}
                     {% if transaction_period.is_closed %}(Closed){% endif %}
                 </h4>
             </div>
@@ -40,7 +40,13 @@
                         {% endfor %}
                             <tr class="font-weight-bold">
                                 <td colspan="4">Total:</td>
-                                <td>RS. {{ total_income.income_amount__sum }}</td>
+                                <td class="text-center">
+                                    {% if total_income.income_amount__sum %}
+                                        RS. {{ total_income.income_amount__sum }}
+                                    {% else %}
+                                        RS. 0
+                                    {% endif %}
+                                </td>
                             </tr>
                     </tbody>
                 </table>

@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="text-center p-3">Income Report for {{ transaction_period }}
+                <h4 class="text-center p-3">Income Report {% if transaction_period %} for {{ transaction_period }}{% endif %}
                     {% if transaction_period.is_closed %}(Closed){% endif %}
                 </h4>
             </div>
@@ -17,7 +17,7 @@
 
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>S.N</th>
                             <th>Date</th>
                             <th>Account</th>
@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
                         {% for income in income %}
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ income.created_at }}</td>
                                 <td>{{ income.account }}</td>
@@ -37,7 +37,13 @@
                         {% endfor %}
                             <tr class="font-weight-bold">
                                 <td colspan="4">Total:</td>
-                                <td>RS. {{ total_income.income_amount__sum }}</td>
+                                <td class="text-center">
+                                    {% if total_income.income_amount__sum %}
+                                        RS. {{ total_income.income_amount__sum }}
+                                    {% else %}
+                                        RS. 0
+                                    {% endif %}
+                                </td>
                             </tr>
                     </tbody>
                 </table>
