@@ -1,0 +1,74 @@
+{% extends 'user_dashboard_base.html' %}
+{% load static %}
+
+{% block body %}
+
+    <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'bower_components/chart.js/dist/Chart.min.js' %}"></script>
+    <div id="container" style="width: 75%;" class="mx-auto">
+    <canvas id="income-chart" data-url="{% url 'pages:bar_report_chart' %}"></canvas>
+  </div>
+
+  <script>
+
+    $(function () {
+
+      var $incomeChart = $("#income-chart");
+      $.ajax({
+        url: $incomeChart.data("url"),
+        success: function (data) {
+
+          var ctx = $incomeChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Income',
+                backgroundColor: 'green',
+                data: data.income_data,
+                barThickness: 50,
+              },
+              {
+                  label: 'Expense',
+                  backgroundColor: 'red',
+                  data: data.expense_data,
+                  barThickness: 50
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Income Expense Bar Chart'
+              },
+                scales : {
+                  yAxes : [{
+                      ticks : {
+                          min : 0
+                      },
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Money in Rupees',
+                          fontSize: 18,
+                      }
+                  }]
+                }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
