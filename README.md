@@ -22,3 +22,4 @@ python mange.py migrate
 ```
 
 ## License
+[MIT](https://github.com/dhirajshah04/moneytracker/blob/master/LICENSE)
