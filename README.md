@@ -1,6 +1,7 @@
 # MoneyTracker
 Money Trackers is a simple web application for tracking all your incomes and expenses
 and help in comparing and managing the money.
+
 #Installation
 * Clone the repository.
 ```
@@ -19,4 +20,5 @@ bower install
 ```
 python mange.py migrate
 ```
+
 #License
