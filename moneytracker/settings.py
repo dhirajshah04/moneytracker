@@ -22,7 +22,8 @@ except:
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='qle(jlj-#l=*ezu(3snq6%00r=c+slii)igvs^bp*glhr5*0c@')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+# SECRET_KEY = env('DJANGO_SECRET_KEY', default='qle(jlj-#l=*ezu(3snq6%00r=c+slii)igvs^bp*glhr5*0c@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG', True)
